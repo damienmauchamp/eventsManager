@@ -2,12 +2,30 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+#        in_memory:
+#            memory:
+#                users:
+#                    admin:
+#                        password: $2y$13$bAI2DBpRvH2VKwkUOVvBi..KkccHgokhvsszWfWHX0Yq9zo28.1RW
+#                        # admin
+#                        roles: 'ROLE_ADMIN'
+#                    user:
+#                        password: $2y$13$1LxyrUiz6vwRdRPAn4CvCOmPIk30Q0uw.yCM3t2hJr9FBMUmZVxhK
+#                        # user
+#                        roles: 'ROLE_USER'
+        db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            pattern:    ^/
+            http_basic: ~
+            provider: db_provider
 
             # activate different ways to authenticate
 
@@ -17,6 +35,9 @@ security:
             # form_login: true
             # https://symfony.com/doc/current/security/form_login_setup.html
 
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
