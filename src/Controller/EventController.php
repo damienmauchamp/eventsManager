@@ -31,7 +31,9 @@ class EventController extends Controller
     public function userPage(Event $event)
     {
         // TODO : affichage d'un profil
+        $participants = $event->getParticipants();
+        $creator = $event->getCreatedBy();
         return $this->render("event.html.twig",
-            array("event" => $event));
+            array("event" => $event, "participants" => $participants, "creator" => $creator));
     }
 }

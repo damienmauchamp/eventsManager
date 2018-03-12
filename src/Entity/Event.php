@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -12,7 +13,7 @@ class Event
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id_event", type="integer")
      */
     private $id;
 
@@ -36,6 +37,32 @@ class Event
      */
     private $description;
 
+    /// RELATIONS ENTRE ENTITÉS
+
+    /**
+     * ID du créateur de l'évènement
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdEvents")
+     * @ORM\JoinColumn(name="id_creator", referencedColumnName="id_user")
+     */
+    private $createdBy;
+
+    /**
+     * Liste des participants à cette évènement
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="events")
+     *
+     * @ORM\JoinTable(
+     *  name="event_user",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="event_id", referencedColumnName="id_event")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id_user")
+     *  }
+     * )
+     */
+    private $participants;
+
+
     /// CONSTRUCTEUR
 
     /**
@@ -43,6 +70,7 @@ class Event
      */
     public function __construct()
     {
+        $this->participants = new ArrayCollection();
     }
 
     /// GETTEURS / SETTEURS
@@ -117,6 +145,30 @@ class Event
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
+
+    /**
+     * @param mixed $createdBy
+     */
+    public function setCreatedBy($createdBy): void
+    {
+        $this->createdBy = $createdBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 
 

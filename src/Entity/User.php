@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -13,7 +14,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id_user", type="integer")
      */
     private $id;
 
@@ -47,6 +48,29 @@ class User implements UserInterface, \Serializable
      */
     private $role;
 
+    /// RELATIONS ENTRE ENTITÉS
+
+    /**
+     * Liste des évènements dont il participe
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="participants")
+     *
+     * @ORM\JoinTable(
+     *  name="event_user",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id_user")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="event_id", referencedColumnName="id_event")
+     *  }
+     * )
+     */
+    private $events;
+
+    /**
+     * Liste des évènements qu'il a créé
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="createdBy")
+     */
+    private $createdEvents;
 
     /// CONSTRUCTEUR
 
@@ -55,6 +79,8 @@ class User implements UserInterface, \Serializable
      */
     public function __construct()
     {
+        $this->events = new ArrayCollection();
+        $this->createdEvents = new ArrayCollection();
     }
 
     ///
@@ -211,6 +237,22 @@ class User implements UserInterface, \Serializable
     public function setRole($role): void
     {
         $this->role = $role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedEvents()
+    {
+        return $this->createdEvents;
     }
 
 

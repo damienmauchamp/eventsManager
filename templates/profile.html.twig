@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html>
 <body>
-{{ user.id }}
-{{ user.username }}
-{#{{ user.password }}#}
-{{ user.firstname }}
-{{ user.lastname }}
-{{ user.email }}
-{{ user.role }}
+<pre>
+    <h1>Profil :</h1>
+    {{ user.id }}
+    {{ user.username }}
+    {#{{ user.password }}#}
+    {{ user.firstname }}
+    {{ user.lastname }}
+    {{ user.email }}
+    {{ user.role }}
+
+    <h1>Évènements créés :</h1>
+    {% for createdEvent in created %}
+        {{ createdEvent.name }}<br/>
+    {% endfor %}
+
+    <h1>Participations :</h1>
+    {% for event in events %}
+        {{ event.name }}<br/>
+    {% endfor %}
+    </pre>
 </body>
 </html>

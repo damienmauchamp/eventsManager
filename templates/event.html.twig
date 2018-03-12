@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html>
 <body>
-{{ event.id }}
-{{ event.name }}
-{{ event.place }}
-{{ event.date|date("Y-m-d") }}
-<p>
+<pre>
+    <h1>Évènement :</h1>
+    {{ event.id }}
+    {{ event.name }}
+    {{ event.place }}
+    {{ event.date|date("Y-m-d") }}
     {{ event.description }}
-</p>
+
+    <h1>Créateur :</h1>
+    {{ creator.username }}
+
+    <h1>Participants :</h1>
+    {% for participant in participants %}
+        {{ participant.username }}<br/>
+    {% endfor %}
+    </pre>
 </body>
 </html>
