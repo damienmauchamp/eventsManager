@@ -12,7 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+use App\Entity\User;
 
 /**
  * Class UserController
@@ -20,15 +21,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  */
 class UserController extends Controller
 {
-
     /**
      * Page d'affichage d'un profil
-     * @Route ("/user/{id}", name="page_connexion", requirements={"id": "\d+"})
+     * @Route ("/user/{id}", name="page_profil", requirements={"id": "\d+"})
+     * @param User $user
+     * @return Response
      */
-    public function userPage()
+    public function userPage(User $user)
     {
         // TODO : affichage d'un profil
-        return $this->render("pwd_recovery.html.twig");
-
+        return $this->render("profile.html.twig",
+            array("user" => $user));
     }
 }

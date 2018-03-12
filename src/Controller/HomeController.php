@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class HomeController
+ * Contient les routes pour la page d'accueil ainsi que les pages de recherche
  * @package App\Controller
  */
 class HomeController extends Controller
@@ -50,25 +51,5 @@ class HomeController extends Controller
     {
         // TODO : page de recherche par libellé
         return $this->render("base.html.twig");
-    }
-    /**
-     * Page de connexion
-     * @Route ("/connexion/", name="page_connexion")
-     * @return Response
-     */
-    public function pageConnexion()
-    {
-        return $this->render("pwd_recovery.html.twig");
-    }
-
-    /**
-     * Page de réinitialisation de mot de passe
-     * @Route ("/recovery/", name="page_oublie_mdp")
-     * @param Request $requete
-     * @return Response
-     */
-    public function passwordRecovery(Request $requete)
-    {
-        return $this->render("pwd_recovery.html.twig");
     }
 }

@@ -23,6 +23,14 @@ security:
             security: false
         main:
             anonymous: true
+            form_login:
+                login_path: login
+                check_path: login
+                # Ajout de la protection CSRF
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: /logout
+                target: /
             pattern:    ^/
             http_basic: ~
             provider: db_provider
