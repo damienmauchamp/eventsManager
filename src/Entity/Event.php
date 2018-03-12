@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -41,6 +42,7 @@ class Event
 
     /**
      * ID du créateur de l'évènement
+     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdEvents")
      * @ORM\JoinColumn(name="id_creator", referencedColumnName="id_user")
      */
