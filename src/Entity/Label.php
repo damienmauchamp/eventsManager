@@ -28,7 +28,7 @@ class Label
 
     /**
      * Liste des évènements sur lequels on retrouve la catégorie
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="labels", inversedBy="labels")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", inversedBy="labels")
      *
      * @ORM\JoinTable(
      *  name="event_label",

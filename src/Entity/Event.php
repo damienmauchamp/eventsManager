@@ -60,7 +60,7 @@ class Event
 
     /**
      * Liste catégories associées à l'évènement
-     * @ORM\ManyToMany(targetEntity="App\Entity\Label", mappedBy="events", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Label", mappedBy="events")
      *
      * @ORM\JoinTable(
      *  name="event_label",
@@ -82,7 +82,7 @@ class Event
 
     /**
      * Liste des participants à cette évènement
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="events", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="events")
      *
      * @ORM\JoinTable(
      *  name="event_user",

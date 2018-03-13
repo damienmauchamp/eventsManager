@@ -53,7 +53,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * Liste des évènements dont il participe
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="participants", inversedBy="participants")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", inversedBy="participants")
      *
      * @ORM\JoinTable(
      *  name="event_user",

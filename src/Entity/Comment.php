@@ -38,7 +38,7 @@ class Comment
 
     /**
      * ID de l'évènement sur lequel on retrouve le commentaire
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="comments")
      * @ORM\JoinColumn(name="id_event", referencedColumnName="id_event")
      */
     private $event;
