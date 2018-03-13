@@ -33,8 +33,12 @@ class EventController extends Controller
         // TODO : affichage d'un profil
         $participants = $event->getParticipants();
         $creator = $event->getCreatedBy();
-//        $comments = $event->getComments();
+        $comments = $event->getComments();
         return $this->render("event.html.twig",
-            array("event" => $event, "participants" => $participants, "creator" => $creator));
+            array(
+                "event" => $event,
+                "participants" => $participants,
+                "creator" => $creator,
+                "comments" => $comments));
     }
 }

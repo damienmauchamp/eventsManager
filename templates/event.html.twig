@@ -7,7 +7,8 @@
     {{ event.id }}
     {{ event.name }}
     {{ event.place }}
-    {{ event.date|date("Y-m-d") }}
+    {#{{ event.dateDebut|date("Y-m-d") }}#}
+    {#{{ event.dateFin|date("Y-m-d") }}#}
     {{ event.description }}
 
     <h1>Créateur :</h1>
@@ -19,5 +20,13 @@
     {% endfor %}
 
     <h1>Commentaires :</h1>
+    {% for comment in comments %}
+        {{ comment.id }}
+        <a href="{{ path("page_profil", {id : comment.postedBy.id }) }}">{{ comment.postedBy.username }}</a>
+        {{ comment.date|date("Y-m-d") }}
+        {{ comment.content }}
+        {#{{ dump(comment) }}#}
+        <hr/>
+    {% endfor %}
 
 {% endblock %}

@@ -36,6 +36,12 @@ class Comment
      */
     private $postedBy;
 
+    /**
+     * ID de l'évènement sur lequel on retrouve le commentaire
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="id")
+     * @ORM\JoinColumn(name="id_event", referencedColumnName="id_event")
+     */
+    private $event;
 
 
     /// CONSTRUCTEUR
@@ -104,5 +110,13 @@ class Comment
     public function setPostedBy($postedBy): void
     {
         $this->postedBy = $postedBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

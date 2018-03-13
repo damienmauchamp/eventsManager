@@ -31,7 +31,12 @@ class Event
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    private $dateDebut;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateFin;
 
     /**
      * @ORM\Column(type="datetime")
@@ -52,6 +57,12 @@ class Event
      * @ORM\JoinColumn(name="id_creator", referencedColumnName="id_user")
      */
     private $createdBy;
+
+    /**
+     * Liste des commentaires sur l'évènement
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="event")
+     */
+    private $comments;
 
     /**
      * Liste des participants à cette évènement
@@ -77,6 +88,7 @@ class Event
      */
     public function __construct()
     {
+        $this->comments = new ArrayCollection();
         $this->participants = new ArrayCollection();
         $this->createdDate = new \DateTime();
     }
@@ -126,17 +138,33 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getDate()
+    public function getDateDebut()
     {
-        return $this->date;
+        return $this->dateDebut;
     }
 
     /**
-     * @param mixed $date
+     * @param mixed $dateDebut
      */
-    public function setDate($date): void
+    public function setDateDebut($dateDebut): void
     {
-        $this->date = new \DateTime($date);
+        $this->dateDebut = new \DateTime($dateDebut);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    /**
+     * @param mixed $dateFin
+     */
+    public function setDateFin($dateFin): void
+    {
+        $this->dateFin = new \DateTime($dateFin);
     }
 
     /**
@@ -169,6 +197,14 @@ class Event
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     /**
