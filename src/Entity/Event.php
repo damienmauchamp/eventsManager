@@ -59,6 +59,22 @@ class Event
     private $createdBy;
 
     /**
+     * Liste catégories associées à l'évènement
+     * @ORM\ManyToMany(targetEntity="App\Entity\Label", mappedBy="events", inversedBy="events")
+     *
+     * @ORM\JoinTable(
+     *  name="event_label",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="event_id", referencedColumnName="id_event")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="label_id", referencedColumnName="id_label")
+     *  }
+     * )
+     */
+    private $labels;
+
+    /**
      * Liste des commentaires sur l'évènement
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="event")
      */
@@ -66,7 +82,7 @@ class Event
 
     /**
      * Liste des participants à cette évènement
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="events")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="events", inversedBy="events")
      *
      * @ORM\JoinTable(
      *  name="event_user",
@@ -88,6 +104,7 @@ class Event
      */
     public function __construct()
     {
+        $this->labels = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->participants = new ArrayCollection();
         $this->createdDate = new \DateTime();
@@ -197,6 +214,14 @@ class Event
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
     }
 
     /**

@@ -12,7 +12,7 @@ class Comment
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id_comment", type="integer")
      */
     private $id;
 

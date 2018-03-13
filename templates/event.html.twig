@@ -29,4 +29,11 @@
         <hr/>
     {% endfor %}
 
+    <h1>Labels :</h1>
+    {% for label in labels %}
+        <a href="{{ path("page_recherche_label", {label : label.id }) }}">{{ label.name }}</a>
+        {#{{ dump(label) }}#}
+        <br/>
+    {% endfor %}
+
 {% endblock %}

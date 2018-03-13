@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Profil{% endblock %}
+
+{% block body %}
+    <h1>Label :</h1>
+    {{ label.id }}
+    {{ label.name }}
+
+    <h1>Évènements correspondants :</h1>
+    {% for event in events %}
+        <a href="{{ path("page_evenement", {id : event.id }) }}">{{ event.name }}</a><br/>
+    {% endfor %}
+
+{% endblock %}

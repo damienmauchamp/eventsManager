@@ -34,11 +34,15 @@ class EventController extends Controller
         $participants = $event->getParticipants();
         $creator = $event->getCreatedBy();
         $comments = $event->getComments();
+        $labels = $event->getLabels();
         return $this->render("event.html.twig",
             array(
                 "event" => $event,
                 "participants" => $participants,
                 "creator" => $creator,
-                "comments" => $comments));
+                "comments" => $comments,
+                "labels" => $labels
+            )
+        );
     }
 }
