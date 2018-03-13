@@ -39,6 +39,22 @@ class EventRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
+    /**
+     * Retourne la liste des évènement les plus récents
+     * @param int $n
+     * @return Event[]
+     */
+    public function findLastAddedEvents($n = 5) {
+        $dbh = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT    e.*
+            FROM      event e
+            ORDER BY  e.created_date DESC
+            LIMIT  ${n}";
+        $stmt = $dbh->query($sql);
+        return $stmt->fetchAll();
+    }
+
     /*
     public function findBySomething($value)
     {

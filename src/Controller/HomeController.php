@@ -41,13 +41,17 @@ class HomeController extends Controller
         // liste des catégories les plus utilisées
         $mostUsedLabels = $repo["label"]->findMostUsed(5);
 
-        // liste des catégories les plus utilisées
+        // liste des évènements les plus populaires
         $mostPopularEvents = $repo["event"]->findMostPopularEvents(5);
+
+        // liste des évènements créés le plus récemment
+        $findLastAddedEvents = $repo["event"]->findLastAddedEvents(5);
 
         return $this->render("homepage.html.twig",
             array(
                 "mostUsedLabels" => $mostUsedLabels,
-                "mostPopularEvents" => $mostPopularEvents
+                "mostPopularEvents" => $mostPopularEvents,
+                "findLastAddedEvents" => $findLastAddedEvents
             )
         );
     }

@@ -22,29 +22,29 @@ use App\Entity\User;
 class UserController extends Controller
 {
     /**
-     * Page d'affichage d'un profil
+     * Page d'affichage d'un profil par ID
      * @Route ("/user/{id}", name="page_profilID", requirements={"id": "\d+"})
      * @param User $user
      * @return Response
      */
     public function userPageByID(User $user)
     {
-        // TODO : affichage d'un profil
         $events = $user->getEvents();
         $createdEvents = $user->getCreatedEvents();
         $postedComments = $user->getPostedComments();
         return $this->render("profile.html.twig",
             array("user" => $user, "events" => $events, "created" => $createdEvents, "comments" => $postedComments));
     }
+
+
     /**
-     * Page d'affichage d'un profil
+     * Page d'affichage d'un profil par username
      * @Route ("/user/{username}", name="page_profil", requirements={"username": "[a-zA-Z0-9.]+"})
      * @param User $user
      * @return Response
      */
     public function userPageByUsername(User $user)
     {
-        // TODO : affichage d'un profil
         $events = $user->getEvents();
         $createdEvents = $user->getCreatedEvents();
         $postedComments = $user->getPostedComments();
