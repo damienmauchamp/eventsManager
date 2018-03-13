@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>{% block title %}eventManager{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
+    {% block scripts %}
+        {# SCRIPTS #}
+        {% include 'headers/scripts.html.twig' %}
+        {% include 'headers/stylesheets.html.twig' %}
+    {% endblock %}
 </head>
 <body>
 <nav>
@@ -44,6 +49,5 @@
     {% endfor %}
 {% endfor %}
 {% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
 </body>
 </html>
