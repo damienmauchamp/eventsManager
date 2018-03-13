@@ -34,6 +34,11 @@ class Event
     private $date;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdDate;
+
+    /**
      * @ORM\Column(type="string", length=3000)
      */
     private $description;
@@ -73,6 +78,7 @@ class Event
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->createdDate = new \DateTime();
     }
 
     /// GETTEURS / SETTEURS
@@ -131,6 +137,22 @@ class Event
     public function setDate($date): void
     {
         $this->date = new \DateTime($date);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * @param mixed $createdDate
+     */
+    public function setCreatedDate($createdDate): void
+    {
+        $this->createdDate = new \DateTime($createdDate);
     }
 
     /**

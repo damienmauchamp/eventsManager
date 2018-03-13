@@ -2,18 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}eventManager{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-{% if is_granted('ROLE_ADMIN') %}
-    Administrator
-{% elseif is_granted('ROLE_USER') %}
-    User
-{% else %}
-    Anonymous
-{% endif %}
-{% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+<nav>
+    <ul>
+        <a href="{{ path("page_accueil") }}">
+            <li>Accueil</li>
+        </a>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path("logout") }}">
+                <li>Se déconnecter ({{ app.user.username }})</li>
+            </a>
+        {% else %}
+            <a href="{{ path("login") }}">
+                <li>Se connecter</li>
+            </a>
+        {% endif %}
+    </ul>
+</nav>
+<pre>
+    {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        Administrator : {{ app.user.username }}
+    {% elseif is_granted('ROLE_USER') %}
+        User : {{ app.user.username }}
+    {% else %}
+        Anonymous
+    {% endif %}
+    </pre>
 </body>
 </html>

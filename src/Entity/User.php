@@ -73,6 +73,12 @@ class User implements UserInterface, \Serializable
      */
     private $createdEvents;
 
+    /**
+     * Liste des commentaires qu'il a posté
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="postedBy")
+     */
+    private $postedComments;
+
     /// CONSTRUCTEUR
 
     /**
@@ -254,6 +260,14 @@ class User implements UserInterface, \Serializable
     public function getCreatedEvents()
     {
         return $this->createdEvents;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostedComments()
+    {
+        return $this->postedComments;
     }
 
 

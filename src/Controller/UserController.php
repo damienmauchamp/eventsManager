@@ -32,7 +32,8 @@ class UserController extends Controller
         // TODO : affichage d'un profil
         $events = $user->getEvents();
         $createdEvents = $user->getCreatedEvents();
+        $postedComments = $user->getPostedComments();
         return $this->render("profile.html.twig",
-            array("user" => $user, "events" => $events, "created" => $createdEvents));
+            array("user" => $user, "events" => $events, "created" => $createdEvents, "comments" => $postedComments));
     }
 }

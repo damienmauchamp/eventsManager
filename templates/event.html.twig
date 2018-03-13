@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html>
-<body>
-<pre>
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Évènement{% endblock %}
+
+{% block body %}
     <h1>Évènement :</h1>
     {{ event.id }}
     {{ event.name }}
@@ -10,12 +11,13 @@
     {{ event.description }}
 
     <h1>Créateur :</h1>
-    {{ creator.username }}
+    <a href="{{ path("page_profil", {id : creator.id }) }}">{{ creator.username }}</a><br/>
 
     <h1>Participants :</h1>
     {% for participant in participants %}
-        {{ participant.username }}<br/>
+        <a href="{{ path("page_profil", {id : participant.id }) }}">{{ participant.username }}</a><br/>
     {% endfor %}
-    </pre>
-</body>
-</html>
+
+    <h1>Commentaires :</h1>
+
+{% endblock %}
