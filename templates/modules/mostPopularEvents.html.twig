@@ -1,0 +1,6 @@
+{# Évènements les plus populaires #}
+
+<h1>Évènements les plus populaires</h1>
+{% for event in mostPopularEvents %}
+    <a href="{{ path("page_evenement", {id : event.id_event }) }}">{{ event.name }} ({{ event.n }})</a><br/>
+{% endfor %}

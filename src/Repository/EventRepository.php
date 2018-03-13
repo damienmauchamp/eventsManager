@@ -19,6 +19,26 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * Retourne la liste des évènement ayant le plus participants
+     * @param int $n
+     * @return Event[]
+     */
+    public function findMostPopularEvents($n = 5): array
+    {
+        $dbh = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT    e.*, COUNT(eu.user_id) AS n
+            FROM      event e
+            LEFT JOIN event_user eu
+              ON      eu.event_id = e.id_event
+            GROUP BY  e.id_event
+            ORDER BY  n DESC
+            LIMIT  ${n}";
+        $stmt = $dbh->query($sql);
+        return $stmt->fetchAll();
+    }
+
     /*
     public function findBySomething($value)
     {

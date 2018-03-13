@@ -12,17 +12,17 @@
     {{ event.description }}
 
     <h1>Créateur :</h1>
-    <a href="{{ path("page_profil", {id : creator.id }) }}">{{ creator.username }}</a><br/>
+    <a href="{{ path("page_profil", {username : creator.username }) }}">{{ creator.username }}</a><br/>
 
     <h1>Participants :</h1>
     {% for participant in participants %}
-        <a href="{{ path("page_profil", {id : participant.id }) }}">{{ participant.username }}</a><br/>
+        <a href="{{ path("page_profil", {username : participant.username }) }}">{{ participant.username }}</a><br/>
     {% endfor %}
 
     <h1>Commentaires :</h1>
     {% for comment in comments %}
         {{ comment.id }}
-        <a href="{{ path("page_profil", {id : comment.postedBy.id }) }}">{{ comment.postedBy.username }}</a>
+        <a href="{{ path("page_profil", {username : comment.postedBy.username }) }}">{{ comment.postedBy.username }}</a>
         {{ comment.date|date("Y-m-d") }}
         {{ comment.content }}
         {#{{ dump(comment) }}#}

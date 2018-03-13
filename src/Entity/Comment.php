@@ -77,7 +77,7 @@ class Comment
      */
     public function setDate($date): void
     {
-        $this->date = $date;
+        $this->date = new \DateTime($date);
     }
 
     /**
@@ -119,4 +119,13 @@ class Comment
     {
         return $this->event;
     }
+
+    /**
+     * @param mixed $event
+     */
+    public function setEvent($event): void
+    {
+        $this->event = $event;
+    }
+
 }

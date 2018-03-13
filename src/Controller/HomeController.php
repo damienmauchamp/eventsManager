@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Entity\Event;
 use App\Entity\Label;
 
 /**
@@ -30,7 +31,25 @@ class HomeController extends Controller
     public function homepage()
     {
         // TODO : page d'accueil
-        return $this->render("base.html.twig");
+
+        // Tableaux de repositories
+        $repo = array(
+            "label" => $this->getDoctrine()->getRepository(Label::class),
+            "event" => $this->getDoctrine()->getRepository(Event::class)
+        );
+
+        // liste des catégories les plus utilisées
+        $mostUsedLabels = $repo["label"]->findMostUsed(5);
+
+        // liste des catégories les plus utilisées
+        $mostPopularEvents = $repo["event"]->findMostPopularEvents(5);
+
+        return $this->render("homepage.html.twig",
+            array(
+                "mostUsedLabels" => $mostUsedLabels,
+                "mostPopularEvents" => $mostPopularEvents
+            )
+        );
     }
 
     /**

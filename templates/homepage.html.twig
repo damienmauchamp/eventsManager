@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Accueil{% endblock %}
+
+{% block body %}
+
+    {# MODULE : Catégories les plus utilisés #}
+    {% include 'modules/mostUsedLabels.html.twig' %}
+
+
+    {# MODULE : Évènements les plus populaires #}
+    {% include 'modules/mostPopularEvents.html.twig' %}
+
+{% endblock %}
