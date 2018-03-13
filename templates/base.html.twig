@@ -12,6 +12,16 @@
             <li>Accueil</li>
         </a>
 
+        <li>
+            {% if is_granted('ROLE_ADMIN') %}
+                Administrator
+            {% elseif is_granted('ROLE_USER') %}
+                User : {{ app.user.username }}
+            {% else %}
+                Anonymous
+            {% endif %}
+        </li>
+
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path("logout") }}">
                 <li>Se déconnecter ({{ app.user.username }})</li>
@@ -26,15 +36,6 @@
 <pre>
     {% block body %}{% endblock %}
     {% block javascripts %}{% endblock %}
-
-
-    {% if is_granted('ROLE_ADMIN') %}
-        Administrator : {{ app.user.username }}
-    {% elseif is_granted('ROLE_USER') %}
-        User : {{ app.user.username }}
-    {% else %}
-        Anonymous
-    {% endif %}
     </pre>
 </body>
 </html>
