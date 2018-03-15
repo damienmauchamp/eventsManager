@@ -58,13 +58,53 @@ class HomeController extends Controller
 
     /**
      * Page de recherche par chaîne de caractère
-     * @Route ("/search/{str}", name="page_recherche_str", requirements={"id": "[a-zA-Z]+"})
+     * @Route ("/search/{query}", name="page_recherche_str", requirements={"query"})
+     * @param string $query
      * @return Response
      */
-    public function searchByString()
+    public function searchByString(string $query)
     {
         // TODO : page de recherche par chaîne de caractère
-        return $this->render("base.html.twig");
+
+        $page = 1;
+        $offset = 0;
+        $limit = 20;
+        $words = explode(" ", $query);
+
+        // récupération du numéro de page et du nombre de résultat maximum
+        if (isset($_GET['page']) && $_GET['page'] > 0)
+            $page = $_GET['page'];
+        if (isset($_GET['max-results']) && $_GET['max-results'] > 0)
+            $limit = $_GET['max-results'];
+
+        $offset = ($page-1)*$limit;
+
+        // Tableaux de repositories
+        $repo = array(
+            "label" => $this->getDoctrine()->getRepository(Label::class),
+            "event" => $this->getDoctrine()->getRepository(Event::class)
+        );
+
+        // liste des catégories les plus utilisées
+        $eventsResults = $repo["event"]->findSearchResult($words, $offset, $limit);
+
+        // on vérifie si il existe une page suivante
+        $nextElt = ($page*$limit+1);
+
+        $nextPage = false;
+        if ($repo["event"]->findSearchResult($words, $nextElt, 1)) {
+            $nextPage = true;
+        }
+
+        return $this->render("recherche.html.twig",
+            array(
+                "query" => $query, // la chaîne de caractères recherchée
+                "events" => $eventsResults, // les résultats des évènements
+                "page" => $page, // la page
+                "limit" => $limit, // le nombre de résultats par page
+                "nextPage" => $nextPage // si il y a des résultats à la page suivante
+            )
+        );
     }
 
     /**

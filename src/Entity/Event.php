@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -107,6 +108,8 @@ class Event
         $this->labels = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->participants = new ArrayCollection();
+        $this->dateDebut = new \DateTime();
+        $this->dateFin = new \DateTime("+1 day");
         $this->createdDate = new \DateTime();
     }
 
@@ -165,7 +168,7 @@ class Event
      */
     public function setDateDebut($dateDebut): void
     {
-        $this->dateDebut = new \DateTime($dateDebut);
+        $this->dateDebut = $dateDebut;
     }
 
     /**
@@ -181,7 +184,7 @@ class Event
      */
     public function setDateFin($dateFin): void
     {
-        $this->dateFin = new \DateTime($dateFin);
+        $this->dateFin = $dateFin;
     }
 
     /**
@@ -214,6 +217,24 @@ class Event
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    public function addLabel(Label $label)
+    {
+        $this->labels[] = $label;
+        return $this;
+    }
+
+    public function removeLabel(Label $label) {
+        $this->labels->removeElement($label);
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels): void
+    {
+        $this->labels = new ArrayCollection($labels);
     }
 
     /**

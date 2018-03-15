@@ -1,35 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Profil{% endblock %}
+{% block title %}{{ parent() }} | Recherche{% endblock %}
 
 {% block body %}
-    <h1>Profil :</h1>
-    {{ user.id }}
-    {{ user.username }}
-    {#{{ user.password }}#}
-    {{ user.firstname }}
-    {{ user.lastname }}
-    {{ user.email }}
-    {{ user.role }}
 
-    <h1>Évènements créés :</h1>
-    {% for createdEvent in created %}
-        <a href="{{ path("page_evenement", {id : createdEvent.id }) }}">{{ createdEvent.name }}</a><br/>
-    {% endfor %}
+    <h1>Résultat pour « {{ query }} »</h1>
 
-    <h1>Participations :</h1>
+    <h1>Évènements correspondants :</h1>
     {% for event in events %}
         <a href="{{ path("page_evenement", {id : event.id }) }}">{{ event.name }}</a><br/>
     {% endfor %}
 
-    <h1>Commentaires postés :</h1>
-    {% for comment in comments %}
-        {{ comment.id }}
-        <a href="{{ path("page_evenement", {id : comment.event.id }) }}">{{ comment.event.name }}</a>
-        {{ comment.date|date("Y-m-d") }}
-        {{ comment.content }}
-        {#{{ dump(comment) }}#}
-        <hr/>
-    {% endfor %}
+    {# Paginateur #}
+    {% if page > 1 %}
+        <a href="{{ path("page_recherche_str", { query : query }) }}?page={{ page-1 }}&max-results={{ limit }}">
+            Précédent
+        </a>
+    {% endif %}
+    Page {{ page }}
+    {% if nextPage %}
+        <a href="{{ path("page_recherche_str", { query : query }) }}?page={{ page+1 }}&max-results={{ limit }}">
+            Suivant
+        </a>
+    {% endif %}
 
 {% endblock %}

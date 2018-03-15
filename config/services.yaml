@@ -24,5 +24,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    tetranz_select2entity.autocomplete_service:
+        class: Tetranz\Select2EntityBundle\Service\AutocompleteService
+        public: true
+
+#    App\Controller\EventController:
+#        arguments:
+#            - '@tetranz_select2entity.autocomplete_service'
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}eventManager{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        {% include 'headers/stylesheets.html.twig' %}
+    {% endblock %}
     {% block scripts %}
         {# SCRIPTS #}
         {% include 'headers/scripts.html.twig' %}
-        {% include 'headers/stylesheets.html.twig' %}
     {% endblock %}
+
+    <link rel="stylesheet" href="{{ asset('css/select2.css') }}" />
+    <script src="{{ asset('js/select2.full.js') }}"></script>
 </head>
 <body>
 <nav>
@@ -28,6 +32,9 @@
         </li>
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path("page_ajout_evenement") }}">
+                <li>Ajouter un évènement</li>
+            </a>
             <a href="{{ path("logout") }}">
                 <li>Se déconnecter ({{ app.user.username }})</li>
             </a>
@@ -38,6 +45,16 @@
         {% endif %}
     </ul>
 </nav>
+
+<div class="input-group">
+    <input type="text" class="form-control" id="search" name="_search"
+           placeholder="Rechercher..." aria-label="Recipient's username" aria-describedby="search-addon"/>
+    <div class="input-group-append" id="search-addon-wrap">
+        <span class="input-group-text" id="search-addon">X</span>
+    </div>
+</div>
+
+
 {% for label, messages in app.session.flashbag.all %}
     {% for message in messages %}
         <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">

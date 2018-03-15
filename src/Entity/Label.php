@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\Event;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LabelRepository")
@@ -41,6 +42,22 @@ class Label
      * )
      */
     private $events;
+
+    /**
+     * @param \App\Entity\Event $event
+     */
+    public function setEvent(Event $event): void
+    {
+        $this->events[] = $event;
+    }
+
+    public function getEvent(Event $event) {
+        return $this->events->get($event->getId());
+    }
+
+    public function removeEvent(Event $event) {
+        $this->events->removeElement($event);
+    }
 
     /// CONSTRUCTEUR
     ///

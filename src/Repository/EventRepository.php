@@ -44,7 +44,8 @@ class EventRepository extends ServiceEntityRepository
      * @param int $n
      * @return Event[]
      */
-    public function findLastAddedEvents($n = 5) {
+    public function findLastAddedEvents($n = 5)
+    {
         $dbh = $this->getEntityManager()->getConnection();
         $sql = "
             SELECT    e.*
@@ -53,6 +54,45 @@ class EventRepository extends ServiceEntityRepository
             LIMIT  ${n}";
         $stmt = $dbh->query($sql);
         return $stmt->fetchAll();
+    }
+
+    /**
+     * Retourne la liste des évènements correspondants à la recherche
+     * Va chercher dans le nom et la description
+     * @param array $words
+     * @param int $offset
+     * @param int $limit
+     * @return mixed
+     */
+    public function findSearchResult($words, $offset = 0, $limit = null)
+    {
+
+        $builder = $this->createQueryBuilder('e');
+
+        // Mise en place des conditions
+        for ($i = 0; $i < count($words); $i++) {
+            $param = "?${i}";
+            $builder->andWhere($builder->expr()->orX(
+                $builder->expr()->like('e.name', $param),
+                $builder->expr()->like('e.description', $param)
+            ));
+        }
+
+        // On inclut les paramètres
+        for ($i = 0; $i < count($words); $i++) {
+            $builder->setParameter($i, '%' . $words[$i] . '%');
+        }
+
+        // Offset
+        $builder->setFirstResult($offset);
+
+        // Limite
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        return $builder->getQuery()
+            ->getResult();
     }
 
     /*

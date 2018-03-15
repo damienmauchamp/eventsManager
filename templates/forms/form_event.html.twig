@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Ajout dun évènement{% endblock %}
+
+{% block body %}
+    <h1>Nouvel évènement :</h1>
+
+    {{ form_start(formulaire, {attr: {class: 'my-form-class'} }) }}
+    {{ form_widget(formulaire) }}
+    {{ form_end(formulaire) }}
+
+
+    {#{{ form(formulaire) }}#}
+    {#{{ dump(formulaire) }}#}
+    {#{{ dump(app.user) }}#}
+{% endblock %}

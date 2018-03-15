@@ -1,6 +1,6 @@
 {# MODULE : Évènements les plus récents #}
 
-<h1>Catégories les plus utilisés</h1>
+<h1>Les derniers évènements ajoutés</h1>
 {% for event in findLastAddedEvents %}
     <a href="{{ path("page_evenement", {id : event.id_event }) }}">{{ event.name }}</a><br/>
 {% endfor %}
