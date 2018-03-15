@@ -70,12 +70,14 @@ class User implements UserInterface, \Serializable
     /**
      * Liste des évènements qu'il a créé
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="createdBy")
+     * @ORM\OrderBy({"createdDate" = "DESC"})
      */
     private $createdEvents;
 
     /**
      * Liste des commentaires qu'il a posté
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="postedBy")
+     * @ORM\OrderBy({"date" = "DESC"})
      */
     private $postedComments;
 
@@ -254,6 +256,16 @@ class User implements UserInterface, \Serializable
         return $this->events;
     }
 
+    public function addEvent(Event $event)
+    {
+        $this->events[] = $event;
+        return $this;
+    }
+
+    public function removeEvent(Event $event) {
+        $this->events->removeElement($event);
+    }
+
     /**
      * @return mixed
      */
@@ -268,6 +280,14 @@ class User implements UserInterface, \Serializable
     public function getPostedComments()
     {
         return $this->postedComments;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->getRole() == 1;
     }
 
 

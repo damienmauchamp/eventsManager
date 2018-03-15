@@ -19,8 +19,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Tetranz\Select2EntityBundle\Service\AutocompleteService;
 
 use App\Entity\User;
+use App\Entity\Comment;
 use App\Entity\Event;
 use App\Entity\Label;
+use App\Form\CommentType;
 use App\Form\EventType;
 
 /**
@@ -47,22 +49,41 @@ class EventController extends Controller
      * Page d'affichage d'un évènement
      * @Route ("/event/{id}/", name="page_evenement", requirements={"id": "\d+"})
      * @param Event $event
+     * @param Request $requete
      * @return Response
      */
-    public function eventPage(Event $event)
+    public function eventPage(Event $event, Request $requete)
     {
         // TODO : affichage d'un profil
         $participants = $event->getParticipants();
         $creator = $event->getCreatedBy();
         $comments = $event->getComments();
         $labels = $event->getLabels();
+
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $user = $this->getUser();
+        $commentForm->handleRequest($requete);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setEvent($event);
+            $comment->setPostedBy($user);
+            $gestionnaire = $this->getDoctrine()->getManager();
+            $gestionnaire->persist($comment);
+            $gestionnaire->flush();
+            $this->addFlash("success", "Commentaire ajouté.");
+
+            return $this->redirectToRoute("page_evenement", array("id" => $event->getId()));
+        }
+
         return $this->render("event.html.twig",
             array(
                 "event" => $event,
                 "participants" => $participants,
                 "creator" => $creator,
                 "comments" => $comments,
-                "labels" => $labels
+                "labels" => $labels,
+                "commentForm" => $commentForm->createView()
             )
         );
     }
@@ -70,6 +91,7 @@ class EventController extends Controller
     /**
      * Page d'ajout d'un évènement
      * @Route ("/event/add/", name="page_ajout_evenement")
+     * @Security("has_role('ROLE_USER') || has_role('ROLE_ADMIN')")
      * @param Request $requete
      * @return Response
      */
@@ -93,6 +115,11 @@ class EventController extends Controller
 
         // création du formulaire
         $formulaire = $this->createForm(EventType::class, $event);
+        if (!($formulaire->isSubmitted() && $formulaire->isValid())) {
+            $formulaire->add("valider", SubmitType::class, [
+                "label" => "Créer l'évènement"
+            ]);
+        }
         $formulaire->handleRequest($requete);
 
         // validation du formulaire
@@ -111,7 +138,7 @@ class EventController extends Controller
             $gestionnaire->persist($event);
             $gestionnaire->flush();
             $this->addFlash("success", "Nouvel évènement ajouté.");
-            return $this->redirect("/");
+            return $this->redirectToRoute("page_evenement", array("id" => $event->getId()));
         } else {
             return $this->render("forms/form_event.html.twig",
                 array(
@@ -124,7 +151,7 @@ class EventController extends Controller
     /**
      * Page d'édition d'un évènement
      * @Route ("/event/{id}/edit/", name="page_edit_evenement", requirements={"id": "\d+"})
-     * @Security("event.isCreator(user)")
+     * @Security("event.isCreator(user) || has_role('ROLE_ADMIN')")
      * @param Event $event
      * @param Request $requete
      * @return Response
@@ -141,6 +168,13 @@ class EventController extends Controller
         $oldLabels = $event->getLabels();
 
         $formulaire = $this->createForm(EventType::class, $event);
+
+
+        if (!($formulaire->isSubmitted() && $formulaire->isValid())) {
+            $formulaire->add("valider", SubmitType::class, [
+                "label" => "Modifier l'évènement"
+            ]);
+        }
 
         /** @var Label $label */
         foreach ($event->getLabels() as $label) {
@@ -164,7 +198,7 @@ class EventController extends Controller
             $gestionnaire->persist($event);
             $gestionnaire->flush();
             $this->addFlash("success", "Évènement modifié.");
-            return $this->redirect("/event/" . $event->getId());
+            return $this->redirectToRoute("page_evenement", array("id" => $event->getId()));
 
         } else {
             return $this->render("forms/form_event.html.twig",
@@ -175,10 +209,10 @@ class EventController extends Controller
         }
     }
 
-
     /**
-     * @Route ("/event/{id}/remove/", name="suppression_article", requirements={"id": "\d+"})
-     * @Security("event.isCreator(user)")
+     * Suppression d'un évènement
+     * @Route ("/event/{id}/remove/", name="suppression_evenement", requirements={"id": "\d+"})
+     * @Security("event.isCreator(user) || has_role('ROLE_ADMIN')")
      * @param Event $event
      * @return Response
      */
@@ -191,57 +225,78 @@ class EventController extends Controller
         // Message affiché
         $this->addFlash("success", "Évènement supprimé.");
 
-        return $this->redirect("/");
+        return $this->redirectToRoute("page_accueil");
     }
 
-
-    /////////////
-    /// TESTS ///
-
     /**
-     * @Route ("/event/test")
+     * Suppression d'un commentaire
+     * @Route ("/comment/{id}/remove/", name="suppression_commentaire", requirements={"id": "\d+"})
+     * @Security("comment.isCreator(user) || has_role('ROLE_ADMIN')")
+     * @return Response
      */
-    public function testEvent()
+    public function removeComment(Comment $comment)
     {
         $gestionnaire = $this->getDoctrine()->getManager();
-
-        $event = new Event();
-        $user = $this->getUser();
-
-        $event->setName("nom");
-        $event->setPlace("place");
-        $event->setDescription("description");
-//        $event->setDateDebut("now");
-//        $event->setDateFin("now +1 hour");
-        $event->setCreatedBy($user);
-
-        $label1 = new Label();
-        $label1 = $gestionnaire->getRepository(Label::class)
-            ->findOneBy(['id' => 1]);
-        $event->addLabel($label1);
-
-        $label1->setEvent($event);
-        $gestionnaire->persist($label1);
-        $gestionnaire->persist($event);
-
+        $gestionnaire->remove($comment);
         $gestionnaire->flush();
 
+        $event = $comment->getEvent();
 
-        dump($label1);
-        dump($event);
+        // Message affiché
+        $this->addFlash("success", "Commentaire supprimé.");
 
-        exit;
+        return $this->redirectToRoute("page_evenement", array("id" => $event->getId()));
+    }
+
+
+    /**
+     * L'utilisateur ajoute sa participation à l'évènement
+     * @Route ("/event/{id}/participe", name="add_participation", requirements={"id": "\d+"})
+     * @Security ("has_role('ROLE_USER') || has_role('ROLE_ADMIN')")
+     * @param Event $event
+     * @param Request $requete
+     * @return Response
+     */
+    public function addParticipation(Event $event, Request $requete)
+    {
+        $user = $this->getUser();
+
+        if (!$event->isParticipating($user)) {
+            $event->addParticipant($user);
+            $user->addEvent($event);
+
+            $gestionnaire = $this->getDoctrine()->getManager();
+            $gestionnaire->persist($user);
+            $gestionnaire->persist($event);
+            $gestionnaire->flush();
+        }
+
+        return $this->redirectToRoute("page_evenement", array("id" => $event->getId()));
+
     }
 
     /**
-     * @param Request $request
-     * @Route("/label_autocomplete", name="label_autocomplete")
-     * @return JsonResponse
+     * L'utilisateur supprime sa participation à l'évènement
+     * @Route ("/event/{id}/annulation", name="remove_participation", requirements={"id": "\d+"})
+     * @Security ("has_role('ROLE_USER') || has_role('ROLE_ADMIN')")
+     * @param Event $event
+     * @param Request $requete
+     * @return Response
      */
-    public function autocompleteAction2(Request $request)
+    public function removeParticipation(Event $event, Request $requete)
     {
-        $as = $this->get('tetranz_select2entity.autocomplete_service');
-        $result = $as->getAutocompleteResults($request, EventType::class);
-        return new JsonResponse($result);
+        $user = $this->getUser();
+
+        if ($event->isParticipating($user)) {
+            $event->removeParticipant($user);
+            $user->removeEvent($event);
+
+            $gestionnaire = $this->getDoctrine()->getManager();
+            $gestionnaire->persist($event);
+            $gestionnaire->persist($user);
+            $gestionnaire->flush();
+        }
+
+        return $this->redirectToRoute("page_evenement", array("id" => $event->getId()));
     }
 }

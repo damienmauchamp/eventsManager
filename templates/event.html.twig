@@ -4,9 +4,17 @@
 
 {% block body %}
 
-    {% if event.isCreator(app.user) %}
-        <a href="./edit"> modifier </a>
-        <a href="./remove"> supprimer </a>
+    {% if event.isCreator(app.user) or is_granted('ROLE_ADMIN') %}
+        <a href="{{ path("page_edit_evenement", {id : event.id }) }}"> modifier </a>
+        <a href="{{ path("suppression_evenement", {id : event.id }) }}"> supprimer </a>
+    {% endif %}
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if event.isParticipating(app.user) %}
+            <a href="{{ path("remove_participation", {id : event.id }) }}"> annuler la participation </a>
+        {% else %}
+            <a href="{{ path("add_participation", {id : event.id }) }}"> participer </a>
+        {% endif %}
     {% endif %}
 
     <h1>Évènement :</h1>
@@ -20,26 +28,40 @@
     <h1>Créateur :</h1>
     <a href="{{ path("page_profil", {username : creator.username }) }}">{{ creator.username }}</a><br/>
 
-    <h1>Participants :</h1>
-    {% for participant in participants %}
-        <a href="{{ path("page_profil", {username : participant.username }) }}">{{ participant.username }}</a><br/>
-    {% endfor %}
-
-    <h1>Commentaires :</h1>
-    {% for comment in comments %}
-        {{ comment.id }}
-        <a href="{{ path("page_profil", {username : comment.postedBy.username }) }}">{{ comment.postedBy.username }}</a>
-        {{ comment.date|date("Y-m-d") }}
-        {{ comment.content }}
-        {#{{ dump(comment) }}#}
-        <hr/>
-    {% endfor %}
-
     <h1>Labels :</h1>
     {% for label in labels %}
         <a href="{{ path("page_recherche_label", {label : label.id }) }}">{{ label.name }}</a>
         {#{{ dump(label) }}#}
         <br/>
+    {% endfor %}
+
+    <h1>Participants :</h1>
+    {% for participant in participants %}
+        <a href="{{ path("page_profil", {username : participant.username }) }}">{{ participant.username }}</a><br/>
+    {% endfor %}
+
+    <h1>Ajouter un commentaire :</h1>
+    {{ form_start(commentForm, {attr: {class: 'comment-form'} }) }}
+    {{ form_widget(commentForm) }}
+    {{ form_end(commentForm) }}
+    {#{{ dump(commentForm) }}#}
+
+    <h1>Commentaires :</h1>
+    {% for comment in comments %}
+        {{ comment.id }}
+        <a href="{{ path("page_profil", {username : comment.postedBy.username }) }}"
+           id="{{ comment.id }}">{{ comment.postedBy.username }}</a>
+        {{ comment.date|date("Y-m-d") }}
+        {{ comment.content }}
+
+
+        {% if comment.isCreator(app.user) or is_granted('ROLE_ADMIN') %}
+            <a href="{{ path("suppression_commentaire", {id : comment.id }) }}"> supprimer </a>
+        {% endif %}
+
+
+        {#{{ dump(comment) }}#}
+        <hr/>
     {% endfor %}
 
 {% endblock %}

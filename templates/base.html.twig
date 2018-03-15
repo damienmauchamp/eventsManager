@@ -16,34 +16,8 @@
 </head>
 <body>
 <nav>
-    <ul>
-        <a href="{{ path("page_accueil") }}">
-            <li>Accueil</li>
-        </a>
-
-        <li>
-            {% if is_granted('ROLE_ADMIN') %}
-                Administrator
-            {% elseif is_granted('ROLE_USER') %}
-                User : {{ app.user.username }}
-            {% else %}
-                Anonymous
-            {% endif %}
-        </li>
-
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a href="{{ path("page_ajout_evenement") }}">
-                <li>Ajouter un évènement</li>
-            </a>
-            <a href="{{ path("logout") }}">
-                <li>Se déconnecter ({{ app.user.username }})</li>
-            </a>
-        {% else %}
-            <a href="{{ path("login") }}">
-                <li>Se connecter</li>
-            </a>
-        {% endif %}
-    </ul>
+    {# NAVBAR #}
+    {% include 'navbar.html.twig' %}
 </nav>
 
 <div class="input-group">
@@ -66,5 +40,6 @@
     {% endfor %}
 {% endfor %}
 {% block body %}{% endblock %}
+{% block endjs %}{% endblock %}
 </body>
 </html>

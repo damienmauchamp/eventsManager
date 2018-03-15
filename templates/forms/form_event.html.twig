@@ -5,12 +5,8 @@
 {% block body %}
     <h1>Nouvel évènement :</h1>
 
-    {{ form_start(formulaire, {attr: {class: 'my-form-class'} }) }}
+    {{ form_start(formulaire, {attr: {class: 'event-form'} }) }}
     {{ form_widget(formulaire) }}
     {{ form_end(formulaire) }}
 
-
-    {#{{ form(formulaire) }}#}
-    {#{{ dump(formulaire) }}#}
-    {#{{ dump(app.user) }}#}
 {% endblock %}

@@ -56,9 +56,6 @@ class EventType extends AbstractType
             ])
             ->add("description", TextareaType::class, [
                 "label" => "Description"
-            ])
-            ->add("valider", SubmitType::class, [
-                "label" => "Créer l'évènement"
             ]);
 
     }

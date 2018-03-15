@@ -25,7 +25,7 @@
     <h1>Commentaires postés :</h1>
     {% for comment in comments %}
         {{ comment.id }}
-        <a href="{{ path("page_evenement", {id : comment.event.id }) }}">{{ comment.event.name }}</a>
+        <a href="{{ path("page_evenement", {id : comment.event.id }) }}#{{ comment.id }}">{{ comment.event.name }}</a>
         {{ comment.date|date("Y-m-d") }}
         {{ comment.content }}
         {#{{ dump(comment) }}#}

@@ -78,6 +78,7 @@ class Event
     /**
      * Liste des commentaires sur l'évènement
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="event")
+     * @ORM\OrderBy({"date" = "DESC"})
      */
     private $comments;
 
@@ -225,7 +226,8 @@ class Event
         return $this;
     }
 
-    public function removeLabel(Label $label) {
+    public function removeLabel(Label $label)
+    {
         $this->labels->removeElement($label);
     }
 
@@ -261,6 +263,17 @@ class Event
         return $this->participants;
     }
 
+    public function addParticipant(User $user)
+    {
+        $this->participants[] = $user;
+        return $this;
+    }
+
+    public function removeParticipant(User $user)
+    {
+        $this->participants->removeElement($user);
+    }
+
     /**
      * @param mixed $createdBy
      */
@@ -288,5 +301,9 @@ class Event
     {
         return $user && $user == $this->getCreatedBy();
 //        return $user && $user->getId() == $this->getCreatedBy();
+    }
+
+    public function isParticipating($user = null) {
+        return $this->participants->contains($user);
     }
 }

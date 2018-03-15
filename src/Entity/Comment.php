@@ -105,11 +105,11 @@ class Comment
     }
 
     /**
-     * @param mixed $postedBy
+     * @param User $user
      */
-    public function setPostedBy($postedBy): void
+    public function setPostedBy($user): void
     {
-        $this->postedBy = $postedBy;
+        $this->postedBy = $user;
     }
 
     /**
@@ -126,6 +126,18 @@ class Comment
     public function setEvent($event): void
     {
         $this->event = $event;
+    }
+
+    //// FONCTIONS
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function isCreator($user = null)
+    {
+        return $user && $user == $this->getPostedBy();
+//        return $user && $user->getId() == $this->getCreatedBy();
     }
 
 }

@@ -9,9 +9,11 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use \App\Entity\Comment;
 use \App\Entity\Event;
@@ -23,6 +25,7 @@ class TestController extends Controller
 
     /**
      * @Route ("/faker/{object}/{n}", name="faker_user")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param string $object
      * @param int $n
      * @return Response
@@ -112,5 +115,59 @@ class TestController extends Controller
         $this->addFlash("success", "${n} objets ajouté.");
 
         return $this->redirect("/");
+    }
+
+
+
+    /////////////
+    /// TESTS ///
+
+    /**
+     * @Route ("/event/test")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function testEvent()
+    {
+        $gestionnaire = $this->getDoctrine()->getManager();
+
+        $event = new Event();
+        $user = $this->getUser();
+
+        $event->setName("nom");
+        $event->setPlace("place");
+        $event->setDescription("description");
+//        $event->setDateDebut("now");
+//        $event->setDateFin("now +1 hour");
+        $event->setCreatedBy($user);
+
+        $label1 = new Label();
+        $label1 = $gestionnaire->getRepository(Label::class)
+            ->findOneBy(['id' => 1]);
+        $event->addLabel($label1);
+
+        $label1->setEvent($event);
+        $gestionnaire->persist($label1);
+        $gestionnaire->persist($event);
+
+        $gestionnaire->flush();
+
+
+        dump($label1);
+        dump($event);
+
+        exit;
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/label_autocomplete", name="label_autocomplete")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @return JsonResponse
+     */
+    public function autocompleteAction2(Request $request)
+    {
+        $as = $this->get('tetranz_select2entity.autocomplete_service');
+        $result = $as->getAutocompleteResults($request, EventType::class);
+        return new JsonResponse($result);
     }
 }
