@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="465fd92c-f103-4626-893c-6d43aa39db7a" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/php.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/templates/navbar.html.twig" />
-      <change beforePath="$PROJECT_DIR$/.idea/eventsManager.iml" afterPath="$PROJECT_DIR$/.idea/eventsManager.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/Controller/EventController.php" afterPath="$PROJECT_DIR$/src/Controller/EventController.php" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Comment.php" afterPath="$PROJECT_DIR$/src/Entity/Comment.php" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Event.php" afterPath="$PROJECT_DIR$/src/Entity/Event.php" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" afterPath="$PROJECT_DIR$/src/Entity/User.php" />
-      <change beforePath="$PROJECT_DIR$/src/Form/EventType.php" afterPath="$PROJECT_DIR$/src/Form/EventType.php" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" afterPath="$PROJECT_DIR$/templates/base.html.twig" />
-      <change beforePath="$PROJECT_DIR$/templates/event.html.twig" afterPath="$PROJECT_DIR$/templates/event.html.twig" />
-      <change beforePath="$PROJECT_DIR$/templates/forms/form_event.html.twig" afterPath="$PROJECT_DIR$/templates/forms/form_event.html.twig" />
-      <change beforePath="$PROJECT_DIR$/templates/profile.html.twig" afterPath="$PROJECT_DIR$/templates/profile.html.twig" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,32 +16,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EventController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EventController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/EventController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="689">
-              <caret line="270" column="35" lean-forward="false" selection-start-line="270" selection-start-column="35" selection-end-line="270" selection-end-column="35" />
+            <state relative-caret-position="600">
+              <caret line="248" column="0" lean-forward="false" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
               <folding>
                 <element signature="e#117#165#0#PHP" expanded="true" />
                 <element signature="e#1158#1372#0#PHP" expanded="false" />
                 <element signature="e#1377#2670#0#PHP" expanded="false" />
                 <element signature="e#2676#2904#0#PHP" expanded="false" />
                 <element signature="e#2909#4784#0#PHP" expanded="false" />
-                <element signature="e#5085#6890#0#PHP" expanded="false" />
-                <element signature="e#6896#7156#0#PHP" expanded="false" />
-                <element signature="e#7161#7488#0#PHP" expanded="false" />
-                <element signature="e#7494#7735#0#PHP" expanded="false" />
-                <element signature="e#7740#8151#0#PHP" expanded="false" />
+                <element signature="e#4790#5080#0#PHP" expanded="false" />
+                <element signature="e#5085#6848#0#PHP" expanded="false" />
+                <element signature="e#6854#7114#0#PHP" expanded="false" />
+                <element signature="e#7119#7446#0#PHP" expanded="false" />
+                <element signature="e#7452#7693#0#PHP" expanded="false" />
+                <element signature="e#7698#8109#0#PHP" expanded="false" />
+                <element signature="e#8115#8399#0#PHP" expanded="false" />
+                <element signature="e#8404#8913#0#PHP" expanded="false" />
+                <element signature="e#8919#9209#0#PHP" expanded="false" />
+                <element signature="e#9214#9730#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="41" column="52" lean-forward="false" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="52" />
+            <state relative-caret-position="315">
+              <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -141,7 +131,7 @@
         <entry file="file://$PROJECT_DIR$/templates/navbar.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
-              <caret line="28" column="33" lean-forward="true" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+              <caret line="28" column="33" lean-forward="false" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -163,8 +153,8 @@
         <option value="$PROJECT_DIR$/templates/event.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/Event.php" />
         <option value="$PROJECT_DIR$/src/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/Controller/EventController.php" />
         <option value="$PROJECT_DIR$/templates/navbar.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/EventController.php" />
       </list>
     </option>
   </component>
@@ -390,12 +380,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1520858640321</updated>
-      <workItem from="1521121304648" duration="7666000" />
+      <workItem from="1521121304648" duration="7902000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7666000" />
+    <option name="totallyTimeSpent" value="7902000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -510,14 +500,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="41" column="52" lean-forward="false" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/HomeController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -529,7 +511,7 @@
     <entry file="file://$PROJECT_DIR$/templates/navbar.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
-          <caret line="28" column="33" lean-forward="true" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+          <caret line="28" column="33" lean-forward="false" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -544,20 +526,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/EventController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="689">
-          <caret line="270" column="35" lean-forward="false" selection-start-line="270" selection-start-column="35" selection-end-line="270" selection-end-column="35" />
+        <state relative-caret-position="600">
+          <caret line="248" column="0" lean-forward="false" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
           <folding>
             <element signature="e#117#165#0#PHP" expanded="true" />
             <element signature="e#1158#1372#0#PHP" expanded="false" />
             <element signature="e#1377#2670#0#PHP" expanded="false" />
             <element signature="e#2676#2904#0#PHP" expanded="false" />
             <element signature="e#2909#4784#0#PHP" expanded="false" />
-            <element signature="e#5085#6890#0#PHP" expanded="false" />
-            <element signature="e#6896#7156#0#PHP" expanded="false" />
-            <element signature="e#7161#7488#0#PHP" expanded="false" />
-            <element signature="e#7494#7735#0#PHP" expanded="false" />
-            <element signature="e#7740#8151#0#PHP" expanded="false" />
+            <element signature="e#4790#5080#0#PHP" expanded="false" />
+            <element signature="e#5085#6848#0#PHP" expanded="false" />
+            <element signature="e#6854#7114#0#PHP" expanded="false" />
+            <element signature="e#7119#7446#0#PHP" expanded="false" />
+            <element signature="e#7452#7693#0#PHP" expanded="false" />
+            <element signature="e#7698#8109#0#PHP" expanded="false" />
+            <element signature="e#8115#8399#0#PHP" expanded="false" />
+            <element signature="e#8404#8913#0#PHP" expanded="false" />
+            <element signature="e#8919#9209#0#PHP" expanded="false" />
+            <element signature="e#9214#9730#0#PHP" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>

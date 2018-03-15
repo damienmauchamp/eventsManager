@@ -165,7 +165,6 @@ class EventController extends Controller
             return new JsonResponse($result);
         }
         $gestionnaire = $this->getDoctrine()->getManager();
-        $oldLabels = $event->getLabels();
 
         $formulaire = $this->createForm(EventType::class, $event);
 
@@ -248,16 +247,14 @@ class EventController extends Controller
         return $this->redirectToRoute("page_evenement", array("id" => $event->getId()));
     }
 
-
     /**
      * L'utilisateur ajoute sa participation à l'évènement
      * @Route ("/event/{id}/participe", name="add_participation", requirements={"id": "\d+"})
      * @Security ("has_role('ROLE_USER') || has_role('ROLE_ADMIN')")
      * @param Event $event
-     * @param Request $requete
      * @return Response
      */
-    public function addParticipation(Event $event, Request $requete)
+    public function addParticipation(Event $event)
     {
         $user = $this->getUser();
 
@@ -280,10 +277,9 @@ class EventController extends Controller
      * @Route ("/event/{id}/annulation", name="remove_participation", requirements={"id": "\d+"})
      * @Security ("has_role('ROLE_USER') || has_role('ROLE_ADMIN')")
      * @param Event $event
-     * @param Request $requete
      * @return Response
      */
-    public function removeParticipation(Event $event, Request $requete)
+    public function removeParticipation(Event $event)
     {
         $user = $this->getUser();
 
