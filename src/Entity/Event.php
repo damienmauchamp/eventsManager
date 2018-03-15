@@ -278,4 +278,15 @@ class Event
     }
 
 
+    /// Fonctions
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function isCreator($user = null)
+    {
+        return $user && $user == $this->getCreatedBy();
+//        return $user && $user->getId() == $this->getCreatedBy();
+    }
 }

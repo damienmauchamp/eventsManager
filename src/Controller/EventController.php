@@ -124,6 +124,7 @@ class EventController extends Controller
     /**
      * Page d'édition d'un évènement
      * @Route ("/event/{id}/edit/", name="page_edit_evenement", requirements={"id": "\d+"})
+     * @Security("event.isCreator(user)")
      * @param Event $event
      * @param Request $requete
      * @return Response
@@ -177,6 +178,7 @@ class EventController extends Controller
 
     /**
      * @Route ("/event/{id}/remove/", name="suppression_article", requirements={"id": "\d+"})
+     * @Security("event.isCreator(user)")
      * @param Event $event
      * @return Response
      */

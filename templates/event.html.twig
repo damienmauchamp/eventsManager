@@ -3,6 +3,12 @@
 {% block title %}{{ parent() }} | Évènement{% endblock %}
 
 {% block body %}
+
+    {% if event.isCreator(app.user) %}
+        <a href="./edit"> modifier </a>
+        <a href="./remove"> supprimer </a>
+    {% endif %}
+
     <h1>Évènement :</h1>
     {{ event.id }}
     {{ event.name }}
