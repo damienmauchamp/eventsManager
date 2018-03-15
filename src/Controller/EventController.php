@@ -175,6 +175,24 @@ class EventController extends Controller
     }
 
 
+    /**
+     * @Route ("/event/{id}/remove/", name="suppression_article", requirements={"id": "\d+"})
+     * @param Event $event
+     * @return Response
+     */
+    public function removeEvent(Event $event)
+    {
+        $gestionnaire = $this->getDoctrine()->getManager();
+        $gestionnaire->remove($event);
+        $gestionnaire->flush();
+
+        // Message affiché
+        $this->addFlash("success", "Évènement supprimé.");
+
+        return $this->redirect("/");
+    }
+
+
     /////////////
     /// TESTS ///
 
