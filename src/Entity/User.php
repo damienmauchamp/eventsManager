@@ -87,12 +87,6 @@ class User implements UserInterface, \Serializable
      */
     private $postedComments;
 
-    /**
-     * Préfixe pour la réinitialisation de mot de passe
-     * @var string prefixe
-     */
-    private $prefixe = "EVT_$";
-
     /// CONSTRUCTEUR
 
     /**
@@ -230,12 +224,6 @@ class User implements UserInterface, \Serializable
     public function needsPasswordChange()
     {
         return $this->passwordChange;
-    }
-
-    public function needsPasswordChangeStr()
-    {
-        $length = strlen($this->prefixe);
-        return (substr($this->password, 0, $length) === $this->prefixe);
     }
 
     /**

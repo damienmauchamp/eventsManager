@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -52,6 +53,7 @@ class LoginController extends Controller
     /**
      * Page de changement de mot de passe
      * @Route ("/pwd_change/", name="changement_pwd")
+     * @Security("has_role('ROLE_USER') || has_role('ROLE_ADMIN')")
      * @param Request $requete
      * @return Response
      */
@@ -84,8 +86,6 @@ class LoginController extends Controller
                 "formulaire" => $formulaire->createView()
             )
         );
-
-//        return $this->redirectToRoute("page_accueil");
     }
 
     /**
