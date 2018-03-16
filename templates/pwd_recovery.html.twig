@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        test
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Mot de passe oublié{% endblock %}
+
+{% block body %}
+
+    <h1>Réinitialisation de mot de passe :</h1>
+
+    <p>Pour réinitialiser votre mot de passe, merci d'entrer votre identifiant ou votre adresse mail.</p>
+
+    {{ form_start(formulaire, {attr: {class: 'recovery-form'} }) }}
+    {{ form_widget(formulaire) }}
+    {{ form_end(formulaire) }}
+
+
+{% endblock %}

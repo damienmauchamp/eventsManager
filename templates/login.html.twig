@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Site{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-<div class="login-wrap">
-    <div class="login-error">
-        {% if erreur %}
-            <p>{{ erreur.messageKey|trans(erreur.messageData, "security") }}</p>
-        {% endif %}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Connexion{% endblock %}
+
+{% block body %}
+    <div class="login-wrap">
+        <div class="login-error">
+            {% if erreur %}
+                <p>Vérifiez vos identifiants</p>
+                {#<p>{{ erreur.messageKey|trans(erreur.messageData, "security") }}</p>#}
+            {% endif %}
+        </div>
         <form action="{{ path("login") }}" method="post">
 
             <div class="form-group">
@@ -27,6 +26,4 @@
             <button type="submit">Se connecter</button>
         </form>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}

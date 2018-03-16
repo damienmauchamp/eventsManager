@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Changement de mot de passe{% endblock %}
+
+{% block body %}
+
+    <h1>Changement de mot de passe :</h1>
+
+    {#{% if (errors) %}#}
+        {#{% for error in errors %}#}
+            {#<p>{{ error }}</p>#}
+        {#{% endfor %}#}
+    {#{% endif %}#}
+
+    {{ form_start(formulaire, {attr: {class: 'register-form'} }) }}
+    {{ form_widget(formulaire) }}
+    {{ form_end(formulaire) }}
+
+{% endblock %}

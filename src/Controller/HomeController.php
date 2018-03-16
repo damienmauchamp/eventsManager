@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Event;
 use App\Entity\Label;
+use App\Entity\User;
 
 /**
  * Class HomeController
@@ -31,6 +32,14 @@ class HomeController extends Controller
     public function homepage()
     {
         // TODO : page d'accueil
+
+        // changement de mot de passe
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user && $user->needsPasswordChange()) {
+            return $this->redirectToRoute("changement_pwd");
+        }
 
         // Tableaux de repositories
         $repo = array(

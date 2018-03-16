@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -25,29 +26,34 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=false)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=254)
+     * @ORM\Column(type="string", length=254, nullable=false)
      */
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=254)
+     * @ORM\Column(type="string", length=254, nullable=false)
      */
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=254, unique=true)
+     * @ORM\Column(type="string", length=254, nullable=false, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, options={"default":0})
      */
     private $role;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default":0})
+     */
+    private $passwordChange;
 
     /// RELATIONS ENTRE ENTITÉS
 
@@ -80,6 +86,12 @@ class User implements UserInterface, \Serializable
      * @ORM\OrderBy({"date" = "DESC"})
      */
     private $postedComments;
+
+    /**
+     * Préfixe pour la réinitialisation de mot de passe
+     * @var string prefixe
+     */
+    private $prefixe = "EVT_$";
 
     /// CONSTRUCTEUR
 
@@ -185,6 +197,48 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param UserPasswordEncoderInterface $encoder
+     * @param int $length
+     * @return string
+     */
+    public function reinitPassword($encoder, $length = 8)
+    {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $count = mb_strlen($chars);
+
+        for ($i = 0, $newPsw = ''; $i < $length; $i++) {
+            $index = rand(0, $count - 1);
+            $newPsw .= mb_substr($chars, $index, 1);
+        }
+
+        $encoded = $encoder->encodePassword($this, $newPsw);
+        $this->setPassword($encoded);
+        $this->setPasswordChange(1);
+
+        return $newPsw;
+    }
+
+    /**
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    public function changePassword($encoder) {
+        $encoded = $encoder->encodePassword($this, $this->password);
+        $this->setPassword($encoded);
+        $this->setPasswordChange(0);
+    }
+
+    public function needsPasswordChange()
+    {
+        return $this->passwordChange;
+    }
+
+    public function needsPasswordChangeStr()
+    {
+        $length = strlen($this->prefixe);
+        return (substr($this->password, 0, $length) === $this->prefixe);
+    }
+
+    /**
      * @return mixed
      */
     public function getFirstname()
@@ -249,6 +303,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param int $passwordChange
+     */
+    public function setPasswordChange($passwordChange): void
+    {
+        $this->passwordChange = $passwordChange;
+    }
+
+    /**
      * @return mixed
      */
     public function getEvents()
@@ -262,7 +324,8 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function removeEvent(Event $event) {
+    public function removeEvent(Event $event)
+    {
         $this->events->removeElement($event);
     }
 
