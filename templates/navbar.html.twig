@@ -1,36 +1,37 @@
 <ul>
-    <a href="{{ path("page_accueil") }}">
-        <li>Accueil</li>
-    </a>
-
     <li>
-        {% if is_granted('ROLE_ADMIN') %}
-            Administrator
-        {% elseif is_granted('ROLE_USER') %}
-            User : {{ app.user.username }}
-        {% else %}
-            Anonymous
-        {% endif %}
+        <a href="{{ path("page_accueil") }}">
+            Accueil
+        </a>
     </li>
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <a href="{{ path("page_ajout_evenement") }}">
-            <li>Ajouter un évènement</li>
-        </a>
-        <a href="{{ path("page_profil", {username: app.user.username}) }}">
-            <li>Voir profil</li>
-        </a>
-        <a href="{{ path("logout") }}">
-            <li>Se déconnecter ({{ app.user.username }})</li>
-        </a>
+        <li>
+            <a href="{{ path("page_ajout_evenement") }}">
+                Ajouter un évènement
+            </a>
+        </li>
+        <li>
+            <a href="{{ path("page_profil", {username: app.user.username}) }}">
+                Voir profil
+            </a>
+        </li>
+        <li>
+            <a href="{{ path("logout") }}">
+                Se déconnecter ({{ app.user.username }})
+            </a>
+
+        </li>
     {% else %}
-        <a href="{{ path("inscription") }}">
-            <li>
+        <li>
+            <a href="{{ path("inscription") }}">
                 Inscription
-            </li>
-        </a>
-        <a href="{{ path("login") }}">
-            <li>Se connecter</li>
-        </a>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path("login") }}">
+                Se connecter
+            </a>
+        </li>
     {% endif %}
 </ul>

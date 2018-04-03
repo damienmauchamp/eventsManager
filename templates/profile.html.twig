@@ -4,13 +4,24 @@
 
 {% block body %}
     <h1>Profil :</h1>
-    {{ user.id }}
-    {{ user.username }}
+    {#{{ user.id }}#}
+    Username : {{ user.username }}<br/>
     {#{{ user.password }}#}
-    {{ user.firstname }}
-    {{ user.lastname }}
-    {{ user.email }}
-    {{ user.role }}
+    Nom : {{ user.firstname }} {{ user.lastname }}<br/>
+    Mail : {{ user.email }}<br/>
+    {% if (user.isAdmin()) %}
+        Admin
+    {% else %}
+        User
+    {% endif %}
+    {#{{ user.picture }}#}
+
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if user.isOwner(app.user) %}
+            <a href="{{ path("edit_profil", {username : user.username }) }}"> modifier le profil </a>
+        {% endif %}
+    {% endif %}
 
     <h1>Évènements créés :</h1>
     {% for createdEvent in created %}

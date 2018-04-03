@@ -18,12 +18,11 @@
     {% endif %}
 
     <h1>Évènement :</h1>
-    {{ event.id }}
-    {{ event.name }}
-    {{ event.place }}
-    {#{{ event.dateDebut|date("Y-m-d") }}#}
-    {#{{ event.dateFin|date("Y-m-d") }}#}
-    {{ event.description }}
+    Nom : {{ event.name }}<br/>
+    Lieu : {{ event.place }}<br/>
+    Du : {{ event.dateDebut|date("Y-m-d H:i") }}<br/>
+    Au : {{ event.dateFin|date("Y-m-d H:i") }}<br/>
+    Description : {{ event.description }}
 
     <h1>Créateur :</h1>
     <a href="{{ path("page_profil", {username : creator.username }) }}">{{ creator.username }}</a><br/>

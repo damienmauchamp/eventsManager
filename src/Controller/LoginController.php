@@ -190,6 +190,7 @@ class LoginController extends Controller
                     $user->setRole(0);
                     $encoded = $encoder->encodePassword($user, $user->getPassword());
                     $user->setPassword($encoded);
+                    $user->setPasswordChange(0);
 
                     $gestionnaire = $this->getDoctrine()->getManager();
                     $gestionnaire->persist($user);
@@ -198,7 +199,7 @@ class LoginController extends Controller
 
                     // sendmail
                     return $this->redirectToRoute("mail_register",
-                        array("user" => $user));
+                        array("id" => $user->getId()));
                 }
 
             }

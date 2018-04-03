@@ -215,7 +215,8 @@ class User implements UserInterface, \Serializable
     /**
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function changePassword($encoder) {
+    public function changePassword($encoder)
+    {
         $encoded = $encoder->encodePassword($this, $this->password);
         $this->setPassword($encoded);
         $this->setPasswordChange(0);
@@ -341,5 +342,15 @@ class User implements UserInterface, \Serializable
         return $this->getRole() == 1;
     }
 
+    /// Fonctions
+
+    /**
+     * @param User user
+     * @return bool
+     */
+    public function isOwner(User $user = null)
+    {
+        return $user && $user->getUsername() == $this->getUsername();
+    }
 
 }

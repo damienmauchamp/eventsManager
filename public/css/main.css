@@ -1,7 +1,54 @@
+/** BODY */
+body {
+    color: #161616;
+    background-color: #F7F7F7;
+}
 
 
+/** NAVBAR */
+nav {
+    background: #000;
+}
 
+nav ul {
+    margin: auto;
+    padding: 10px 0;
+    text-align: center;
 
+}
+nav li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    font-weight: 200;
+    color: #FFFFFF;
+}
+nav li a {
+    padding: 3px 12px;
+    margin: 6px 5px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    transition: all .2s;
+}
+
+nav li a:active {
+    background-color: #469aff;
+    color: #FFFFFF;
+}
+nav li a:hover {
+    text-decoration: none;
+    color: #EEE;
+}
+
+/** LOGIN */
+.login-wrap {
+    height: 400px;
+    width: 350px;
+    margin: 100px auto 0 auto;
+    text-align: center;
+    padding: 15px 15px 0;
+    background: #FFF;
+}
 
 
 #search-addon-wrap {

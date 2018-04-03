@@ -13,8 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use \Swift_Mailer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use App\Entity\User;
+use App\Form\UserType;
 
 /**
  * Class UserController
@@ -53,10 +55,56 @@ class UserController extends Controller
             array("user" => $user, "events" => $events, "created" => $createdEvents, "comments" => $postedComments));
     }
 
+    /**
+     * Édition d'un profil
+     * @Route ("/user/{username}/edit", name="edit_profil", requirements={"username": "[a-zA-Z0-9.]+"})
+     * @param User $user
+     * @param Request $requete
+     * @return Response
+     */
+    public function editUserPage(User $user, Request $requete) {
+
+        $current = $this->getUser();
+        if (!$current)
+            return $this->redirectToRoute("page_accueil");
+        if (!($current->isOwner($user) || $current->isAdmin()))
+            return $this->redirectToRoute("page_accueil");
+
+
+        $formulaire = $this->createForm(UserType::class, $user);
+
+        $formulaire->handleRequest($requete);
+
+        $errors = [];
+
+        // validation du formulaire
+        if ($formulaire->isSubmitted() && $formulaire->isValid()) {
+            $repo = array(
+                "user" => $this->getDoctrine()->getRepository(User::class),
+            );
+
+            // liste des catégories les plus utilisées
+            if ($repo["user"]->findOneBy(array('username' => $user->getUsername()))) {
+                $errors[] = "Le nom d'utilisateur est déjà pris";
+            }
+            if ($repo["user"]->findOneBy(array('email' => $user->getEmail()))) {
+                $errors[] = "L'adresse mail renseignée est déjà utilisée";
+            }
+        }
+
+        return $this->render("forms/form_profile.html.twig",
+            array(
+                "formulaire" => $formulaire->createView(),
+                "errors" => $errors
+            )
+        );;
+    }
+
 
     /**
      * @Route ("/mail_register/{id}", name="mail_register", requirements={"id": "\d+"})
      * @param Swift_Mailer $mailer
+     * @param User $user
      * @return Response
      */
     public function envoiMailInscription(\Swift_Mailer $mailer, User $user) {
