@@ -32,6 +32,7 @@ class EventType extends AbstractType
                 "label" => "Fin"
             ])
             ->add("labels", Select2EntityType::class, [
+                'label' => 'Catégories',
                 'remote_route' => 'label_autocomplete',
 //                'remote_path' => 'label_autocomplete',
                 'remote_params' => [
