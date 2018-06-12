@@ -86,6 +86,9 @@
     "monolog/monolog": {
         "version": "1.23.0"
     },
+    "nikic/php-parser": {
+        "version": "v4.0.2"
+    },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
@@ -259,6 +262,9 @@
             "version": "3.3",
             "ref": "41416370e732d1c8e7a0953a5ce815b641cfba0f"
         }
+    },
+    "symfony/polyfill-ctype": {
+        "version": "v1.8.0"
     },
     "symfony/polyfill-intl-icu": {
         "version": "v1.7.0"

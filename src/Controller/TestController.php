@@ -19,6 +19,7 @@ use \App\Entity\Comment;
 use \App\Entity\Event;
 use \App\Entity\Label;
 use \App\Entity\User;
+use App\Form\EventType;
 
 class TestController extends Controller
 {
@@ -161,13 +162,15 @@ class TestController extends Controller
     /**
      * @param Request $request
      * @Route("/label_autocomplete", name="label_autocomplete")
-     * @Security("has_role('ROLE_ADMIN')")
      * @return JsonResponse
      */
     public function autocompleteAction2(Request $request)
     {
         $as = $this->get('tetranz_select2entity.autocomplete_service');
         $result = $as->getAutocompleteResults($request, EventType::class);
+
+        echo json_encode($result);
+
         return new JsonResponse($result);
     }
 }

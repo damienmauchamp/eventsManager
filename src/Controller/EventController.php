@@ -101,6 +101,25 @@ class EventController extends Controller
         if (isset($_GET['q']) && isset($_GET['field_name'])) {
             $as = $this->get('tetranz_select2entity.autocomplete_service');
             $result = $as->getAutocompleteResults($requete, EventType::class);
+
+//            if (!$result["results"]) {
+//                $lName = trim($_GET['q']);
+//                $label = new Label();
+//                $label->setName($lName);
+////                    dump($label);exit;
+//
+//                $length = strlen($lName);
+//                dump(substr(",", -$length));
+//                dump((substr(",", -$length) == $lName));exit;
+//
+//                if ($length === 0 || (substr(",", -$length) === $lName)) {
+//                    $gestionnaire = $this->getDoctrine()->getManager();
+//                    $gestionnaire->persist($label);
+//                    $gestionnaire->flush();
+//                }
+//            }
+
+
             return new JsonResponse($result);
         }
 
@@ -124,6 +143,7 @@ class EventController extends Controller
 
         // validation du formulaire
         if ($formulaire->isSubmitted() && $formulaire->isValid()) {
+//            dump($formulaire);exit;
             $gestionnaire = $this->getDoctrine()->getManager();
 
             /**

@@ -26,11 +26,12 @@ class EventType extends AbstractType
                 "label" => "Lieu"
             ])
             ->add("dateDebut", DateTimeType::class, [
-                "label" => "Début"
+                "label" => "Début",
+                'format' => 'yyyy-MM-dd HH:mm'
             ])
             ->add("dateFin", DateTimeType::class, [
                 "label" => "Fin"
-            ])
+            ])/*
             ->add("labels", Select2EntityType::class, [
                 'label' => 'Catégories',
                 'remote_route' => 'label_autocomplete',
@@ -43,17 +44,35 @@ class EventType extends AbstractType
                 'text_property' => 'name',
                 'property' => 'name',
                 'multiple' => true,
+//                'minimumInputLength' => 2,
+                'minimum_input_length' => 3,
                 'allow_add' => [
                     'enabled' => true,
                     'new_tag_text' => ' (NEW)',
                     'new_tag_prefix' => '__',
                     'tag_separators' => '[",", ""]'
                 ],
-                "language" => 'fr',
-                'minimum_input_length' => 2,
+//                "language" => 'fr',
                 'page_limit' => 10,
-                'allow_clear' => true,
+//                'allow_clear' => true,
                 'delay' => 250
+            ])*/
+            ->add("labels", Select2EntityType::class, [
+                'remote_route' => 'label_autocomplete',
+                'class' => '\App\Entity\Label',
+                'primary_key' => 'id',
+                'text_property' => 'name',
+                'property' => 'name',
+                'multiple' => true,
+                'allow_add' => [
+                    'enabled' => true,
+                    'new_tag_text' => ' (NEW)',
+                    'new_tag_prefix' => '**',
+                    'tag_separators' => '[",", ""]'
+                ],
+                'remote_params' => [
+                    "auth" => "ok"
+                ],
             ])
             ->add("description", TextareaType::class, [
                 "label" => "Description"
