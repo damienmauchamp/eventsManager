@@ -1,0 +1,24 @@
+{% if event.isCreator(comment.postedBy) %}
+    {% set commentClass = 'comment ec' %}
+{% else %}
+    {% set commentClass = 'comment' %}
+{% endif %}
+
+<div class="{{ commentClass }}">
+    <div class="comment-header">
+        {{ comment.id }}
+        <a href="{{ path("page_profil", {username : comment.postedBy.username }) }}"
+           id="{{ comment.id }}">{{ comment.postedBy.username }}</a>
+        {{ comment.date|date("Y-m-d") }}
+    </div>
+    <div class="comment-body">
+        {{ comment.content }}
+    </div>
+    <div class="comment-footer">
+        {% if comment.isCreator(app.user) or is_granted('ROLE_ADMIN') %}
+            <a href="{{ path("suppression_commentaire", {id : comment.id }) }}"> supprimer </a>
+        {% endif %}
+    </div>
+</div>
+{#{{ dump(comment) }}#}
+<hr/>

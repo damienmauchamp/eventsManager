@@ -22,21 +22,17 @@
     Lieu : {{ event.place }}<br/>
     Du : {{ event.dateDebut|date("Y-m-d H:i") }}<br/>
     Au : {{ event.dateFin|date("Y-m-d H:i") }}<br/>
-    Description : {{ event.description }}
-
-    <h1>Créateur :</h1>
-    <a href="{{ path("page_profil", {username : creator.username }) }}">{{ creator.username }}</a><br/>
+    Description : {{ event.description }}<br/>
+    Créé par : <a href="{{ path("page_profil", {username : creator.username }) }}">{{ creator.username }}</a><br/>
 
     <h1>Labels :</h1>
     {% for label in labels %}
-        <a href="{{ path("page_recherche_label", {label : label.id }) }}">{{ label.name }}</a>
-        {#{{ dump(label) }}#}
-        <br/>
+        {% include 'eventsModules/label.html.twig' with {label: label} %}
     {% endfor %}
 
     <h1>Participants :</h1>
     {% for participant in participants %}
-        <a href="{{ path("page_profil", {username : participant.username }) }}">{{ participant.username }}</a><br/>
+        {% include 'eventsModules/participant.html.twig' with {participant: participant} %}
     {% endfor %}
 
     <h1>Ajouter un commentaire :</h1>
@@ -47,20 +43,7 @@
 
     <h1>Commentaires :</h1>
     {% for comment in comments %}
-        {{ comment.id }}
-        <a href="{{ path("page_profil", {username : comment.postedBy.username }) }}"
-           id="{{ comment.id }}">{{ comment.postedBy.username }}</a>
-        {{ comment.date|date("Y-m-d") }}
-        {{ comment.content }}
-
-
-        {% if comment.isCreator(app.user) or is_granted('ROLE_ADMIN') %}
-            <a href="{{ path("suppression_commentaire", {id : comment.id }) }}"> supprimer </a>
-        {% endif %}
-
-
-        {#{{ dump(comment) }}#}
-        <hr/>
+        {% include 'eventsModules/comment.html.twig' with {comment: comment, event: event} %}
     {% endfor %}
 
 {% endblock %}
