@@ -87,7 +87,13 @@ class User implements UserInterface, \Serializable
      */
     private $postedComments;
 
-    /// CONSTRUCTEUR
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     */
+    private $image;
+
+    /// CONSTRUCTEUR                     
 
     /**
      * User constructor.
@@ -332,6 +338,18 @@ class User implements UserInterface, \Serializable
     public function getPostedComments()
     {
         return $this->postedComments;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
     }
 
     /**

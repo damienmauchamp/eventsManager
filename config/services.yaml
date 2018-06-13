@@ -2,6 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    images_directory: '%kernel.root_dir%/../public/img'
 
 services:
     # default configuration for services in *this* file
@@ -27,6 +28,17 @@ services:
     tetranz_select2entity.autocomplete_service:
         class: Tetranz\Select2EntityBundle\Service\AutocompleteService
         public: true
+
+    app.image_uploader:
+        class: App\ImageUpload
+        arguments: ['%images_directory%']
+
+    app.doctrine_image_listener:
+        class: App\EventListener\ImageUploadListener
+        arguments: ['@app.image_uploader']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
 
 #    App\Controller\EventController:
 #        arguments:

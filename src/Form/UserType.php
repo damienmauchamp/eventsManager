@@ -33,10 +33,14 @@ class UserType extends AbstractType
             ->add("email", EmailType::class, [
                 "label" => "Adresse mail"
             ])
+            ->add('image', FileType::class, [
+                'label' => 'Choisir une image de profil',
+                'data_class' => null,
+                'required' => false
+            ])
             ->add("valider", SubmitType::class, [
                 "label" => "S'incrire"
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

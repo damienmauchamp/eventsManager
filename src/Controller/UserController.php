@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,8 +71,18 @@ class UserController extends Controller
         if (!($current->isOwner($user) || $current->isAdmin()))
             return $this->redirectToRoute("page_accueil");
 
+        $gestionnaire = $this->getDoctrine()->getManager();
 
         $formulaire = $this->createForm(UserType::class, $user);
+
+        if (!($formulaire->isSubmitted() && $formulaire->isValid())) {
+            $formulaire->add("valider", SubmitType::class, [
+                "label" => "Modifier"
+            ]);
+            $formulaire->remove("username");
+            $formulaire->remove("password");
+            $formulaire->remove("email");
+        }
 
         $formulaire->handleRequest($requete);
 
@@ -83,12 +94,26 @@ class UserController extends Controller
                 "user" => $this->getDoctrine()->getRepository(User::class),
             );
 
+//            dump($user->getId());
+//            dump($repo["user"]->findOneBy(array('username' => $user->getUsername())));exit;
+
             // liste des catégories les plus utilisées
-            if ($repo["user"]->findOneBy(array('username' => $user->getUsername()))) {
+            $newUsernameUser = $repo["user"]->findOneBy(array('username' => $user->getUsername()));
+            $newEmailUser = $repo["user"]->findOneBy(array('email' => $user->getEmail()));
+
+
+            if ($newUsernameUser && $newUsernameUser->getId() != $user->getId()) {
                 $errors[] = "Le nom d'utilisateur est déjà pris";
             }
-            if ($repo["user"]->findOneBy(array('email' => $user->getEmail()))) {
+            if ($newEmailUser && $newEmailUser->getId() != $user->getId()) {
                 $errors[] = "L'adresse mail renseignée est déjà utilisée";
+            }
+
+            if (!$errors) {
+                $gestionnaire->persist($user);
+                $gestionnaire->flush();
+                $this->addFlash("success", "Profil modifié.");
+                return $this->redirectToRoute("page_profil", array("username" => $user->getUsername()));
             }
         }
 
@@ -97,7 +122,7 @@ class UserController extends Controller
                 "formulaire" => $formulaire->createView(),
                 "errors" => $errors
             )
-        );;
+        );
     }
 
 

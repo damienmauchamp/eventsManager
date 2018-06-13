@@ -3,6 +3,9 @@
 {% block title %}{{ parent() }} | Profil{% endblock %}
 
 {% block body %}
+
+    <img src="{{ asset('img/' ~ user.image) }}" height="100px" width="250px">
+
     <h1>Profil :</h1>
     {#{{ user.id }}#}
     Username : {{ user.username }}<br/>
