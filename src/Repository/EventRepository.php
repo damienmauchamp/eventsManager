@@ -23,6 +23,7 @@ class EventRepository extends ServiceEntityRepository
      * Retourne la liste des évènement ayant le plus participants
      * @param int $n
      * @return Event[]
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function findMostPopularEvents($n = 5): array
     {
@@ -43,6 +44,7 @@ class EventRepository extends ServiceEntityRepository
      * Retourne la liste des évènement les plus récents
      * @param int $n
      * @return Event[]
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function findLastAddedEvents($n = 5)
     {
@@ -50,7 +52,7 @@ class EventRepository extends ServiceEntityRepository
         $sql = "
             SELECT    e.*
             FROM      event e
-            ORDER BY  e.created_date DESC
+            ORDER BY  e.date_debut DESC
             LIMIT  ${n}";
         $stmt = $dbh->query($sql);
         return $stmt->fetchAll();
@@ -93,6 +95,17 @@ class EventRepository extends ServiceEntityRepository
 
         return $builder->getQuery()
             ->getResult();
+    }
+
+    public function findOnGoingEvents() {
+        $dbh = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT    e.*
+            FROM      event e
+            WHERE NOW() BETWEEN e.date_debut AND e.date_fin
+            ORDER BY  e.date_debut DESC";
+        $stmt = $dbh->query($sql);
+        return $stmt->fetchAll();
     }
 
     /*

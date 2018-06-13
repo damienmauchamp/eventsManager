@@ -25,12 +25,21 @@
 
     <h1>Évènements créés :</h1>
     {% for createdEvent in created %}
-        <a href="{{ path("page_evenement", {id : createdEvent.id }) }}">{{ createdEvent.name }}</a><br/>
+        {% if createdEvent.getDateFin > date() %}
+            <a href="{{ path("page_evenement", {id : createdEvent.id }) }}">{{ createdEvent.name }}</a><br/>
+        {% else %}
+            passé : <a href="{{ path("page_evenement", {id : createdEvent.id }) }}">{{ createdEvent.name }}</a><br/>
+        {% endif %}
     {% endfor %}
+
 
     <h1>Participations :</h1>
     {% for event in events %}
-        <a href="{{ path("page_evenement", {id : event.id }) }}">{{ event.name }}</a><br/>
+        {% if event.getDateFin > date() %}
+            <a href="{{ path("page_evenement", {id : event.id }) }}">{{ event.name }}</a><br/>
+            {% else %}
+            passé : <a href="{{ path("page_evenement", {id : event.id }) }}">{{ event.name }}</a><br/>
+        {% endif %}
     {% endfor %}
 
     <h1>Commentaires postés :</h1>

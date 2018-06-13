@@ -1,0 +1,6 @@
+{# MODULE : Évènements en cours #}
+
+<h1>Les évènements en cours</h1>
+{% for event in onGoingEvents %}
+    <a href="{{ path("page_evenement", {id : event.id_event }) }}">{{ event.name }}</a><br/>
+{% endfor %}

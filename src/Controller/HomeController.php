@@ -54,13 +54,17 @@ class HomeController extends Controller
         $mostPopularEvents = $repo["event"]->findMostPopularEvents(5);
 
         // liste des évènements créés le plus récemment
-        $findLastAddedEvents = $repo["event"]->findLastAddedEvents(5);
+        $lastAddedEvents = $repo["event"]->findLastAddedEvents(5);
+
+        // liste des évènements créés le plus récemment
+        $onGoingEvents = $repo["event"]->findOnGoingEvents();
 
         return $this->render("homepage.html.twig",
             array(
                 "mostUsedLabels" => $mostUsedLabels,
                 "mostPopularEvents" => $mostPopularEvents,
-                "findLastAddedEvents" => $findLastAddedEvents
+                "lastAddedEvents" => $lastAddedEvents,
+                "onGoingEvents" => $onGoingEvents
             )
         );
     }

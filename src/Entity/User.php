@@ -76,7 +76,7 @@ class User implements UserInterface, \Serializable
     /**
      * Liste des évènements qu'il a créé
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="createdBy")
-     * @ORM\OrderBy({"createdDate" = "DESC"})
+     * @ORM\OrderBy({"dateDebut" = "ASC"})
      */
     private $createdEvents;
 
