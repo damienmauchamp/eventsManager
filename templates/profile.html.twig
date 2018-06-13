@@ -4,7 +4,9 @@
 
 {% block body %}
 
-    <img src="{{ asset('img/' ~ user.image) }}" height="100px" width="250px">
+    {% if user.image %}
+        <img src="{{ asset('img/' ~ user.image) }}" height="100px" width="250px">
+    {% endif %}
 
     <h1>Profil :</h1>
     {#{{ user.id }}#}
@@ -40,7 +42,7 @@
     {% for event in events %}
         {% if event.getDateFin > date() %}
             <a href="{{ path("page_evenement", {id : event.id }) }}">{{ event.name }}</a><br/>
-            {% else %}
+        {% else %}
             passé : <a href="{{ path("page_evenement", {id : event.id }) }}">{{ event.name }}</a><br/>
         {% endif %}
     {% endfor %}
