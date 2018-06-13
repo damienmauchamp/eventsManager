@@ -98,6 +98,11 @@ class Event
      */
     private $participants;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     */
+    private $image;
 
     /// CONSTRUCTEUR
 
@@ -290,6 +295,25 @@ class Event
         return $this->createdBy;
     }
 
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param $image
+     * @return $this
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
 
     /// Fonctions
 
@@ -303,7 +327,8 @@ class Event
 //        return $user && $user->getId() == $this->getCreatedBy();
     }
 
-    public function isParticipating($user = null) {
+    public function isParticipating($user = null)
+    {
         return $this->participants->contains($user);
     }
 }

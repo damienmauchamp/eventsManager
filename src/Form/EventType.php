@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -76,6 +77,11 @@ class EventType extends AbstractType
             ])
             ->add("description", TextareaType::class, [
                 "label" => "Description"
+            ])
+            ->add('image', FileType::class, [
+                'label' => 'Choisir une image',
+                'data_class' => null,
+                'required' => false
             ]);
 
     }

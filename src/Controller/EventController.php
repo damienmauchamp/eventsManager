@@ -178,6 +178,15 @@ class EventController extends Controller
      */
     public function editEventPage(Event $event, Request $requete)
     {
+        // récupération de l'image
+        $repo = array(
+            "event" => $this->getDoctrine()->getRepository(Event::class),
+        );
+        /** @var Event $oldEvent */
+        $oldEvent = $repo["event"]->findOneBy(array('id' => $event->getId()));
+        $oldImage = $oldEvent->getImage();
+
+
         // Requêtage des labels
         if (isset($_GET['q']) && isset($_GET['field_name'])) {
             $as = $this->get('tetranz_select2entity.autocomplete_service');
@@ -202,8 +211,14 @@ class EventController extends Controller
         }
 
         $formulaire->handleRequest($requete);
+
         // validation du formulaire
         if ($formulaire->isSubmitted() && $formulaire->isValid()) {
+
+            // récupération de l'ancienne image si nulle
+            if ($event->getImage() == null) {
+                $event->setImage($oldImage);
+            }
 
             /**
              * On attribut l'évènement aux labels

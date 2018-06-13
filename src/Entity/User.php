@@ -340,11 +340,18 @@ class User implements UserInterface, \Serializable
         return $this->postedComments;
     }
 
+    /**
+     * @return mixed
+     */
     public function getImage()
     {
         return $this->image;
     }
 
+    /**
+     * @param $image
+     * @return $this
+     */
     public function setImage($image)
     {
         $this->image = $image;

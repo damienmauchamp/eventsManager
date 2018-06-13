@@ -4,6 +4,10 @@
 
 {% block body %}
 
+    {% if event.image %}
+        <img src="{{ asset('img/' ~ event.image) }}" height="100px" width="250px">
+    {% endif %}
+
     {% if event.isCreator(app.user) or is_granted('ROLE_ADMIN') %}
         <a href="{{ path("page_edit_evenement", {id : event.id }) }}"> modifier </a>
         <a href="{{ path("suppression_evenement", {id : event.id }) }}"> supprimer </a>

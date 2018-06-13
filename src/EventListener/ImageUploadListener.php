@@ -8,6 +8,7 @@
 
 namespace App\EventListener;
 
+use App\Entity\Event;
 use App\Entity\User;
 use App\ImageUpload;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -40,7 +41,7 @@ class ImageUploadListener
     private function uploadFile($entity)
     {
         // upload only works for Product entities
-        if (!$entity instanceof User) {
+        if (!$entity instanceof User && !$entity instanceof Event) {
             return;
         }
 
