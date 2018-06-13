@@ -2,6 +2,28 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    app.path.user_images: /uploads/images/user
+
+vich_uploader:
+    mappings:
+        user_images:
+            uri_prefix:         '%app.path.user_images%'
+            upload_destination: '%kernel.root_dir%/../web%app.path.user_images%'
+
+easy_admin:
+    entities:
+        User:
+            list:
+                fields:
+                    - { property: 'profilePic', type: 'image', base_path: '%app.path.user_images%' }
+            show:
+                fields:
+                    - { property: 'profilePic', type: 'image', base_path: '%app.path.user_images%' }
+            form:
+                fields:
+                    - { property: 'profilePicFile', type: 'vich_image' }
+
+
 
 services:
     # default configuration for services in *this* file

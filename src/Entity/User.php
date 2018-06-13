@@ -7,9 +7,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User implements UserInterface, \Serializable
 {
@@ -55,6 +58,18 @@ class User implements UserInterface, \Serializable
      */
     private $passwordChange;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $profilePic;
+
+    /**
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="image")
+     * @var File
+     */
+    private $profilePicFile;
+
     /// RELATIONS ENTRE ENTITÉS
 
     /**
@@ -86,6 +101,8 @@ class User implements UserInterface, \Serializable
      * @ORM\OrderBy({"date" = "DESC"})
      */
     private $postedComments;
+
+
 
     /// CONSTRUCTEUR
 
@@ -332,6 +349,26 @@ class User implements UserInterface, \Serializable
     public function getPostedComments()
     {
         return $this->postedComments;
+    }
+
+    public function setProfilPicFile(File $profilePic = null)
+    {
+        $this->profilePicFile = $profilePic;
+    }
+
+    public function getProfilePicFile()
+    {
+        return $this->profilePicFile;
+    }
+
+    public function setProfilPic($profilePic)
+    {
+        $this->profilePic = $profilePic;
+    }
+
+    public function getProfilPic()
+    {
+        return $this->profilePic;
     }
 
     /**

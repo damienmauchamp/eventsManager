@@ -26,7 +26,8 @@
         "symfony/web-link": "^4.0",
         "symfony/webpack-encore-pack": "*",
         "symfony/yaml": "^4.0",
-        "tetranz/select2entity-bundle": "^2.9"
+        "tetranz/select2entity-bundle": "^2.9",
+        "vich/uploader-bundle": "^1.8"
     },
     "require-dev": {
         "symfony/browser-kit": "^4.0",
