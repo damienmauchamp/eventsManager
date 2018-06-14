@@ -100,6 +100,8 @@ class Event
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message="Vous devez ajouter une image de couverture.")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
      */
     private $image;
