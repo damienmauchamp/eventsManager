@@ -13,6 +13,11 @@
         </li>
         <li>
             <a href="{{ path("page_profil", {username: app.user.username}) }}">
+                {% if app.user.image %}
+                    <div class="avatar-wrap" style="height:24px;width:24px;overflow:hidden;display:inline-block;vertical-align:sub">
+                        <img src="{{ asset('img/' ~ app.user.image) }}" height="24px" width="auto">
+                    </div>
+                {% endif %}
                 Voir profil
             </a>
         </li>

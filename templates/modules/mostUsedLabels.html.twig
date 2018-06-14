@@ -1,6 +1,6 @@
 {# MODULE : Catégories les plus utilisés #}
 
-<h1>Catégories les plus utilisés</h1>
+<h1>Catégories les plus populaires</h1>
 {% for label in mostUsedLabels %}
     <a href="{{ path("page_recherche_label", {label : label.id }) }}">{{ label.name }} ({{ label.n }})</a><br/>
 {% endfor %}
